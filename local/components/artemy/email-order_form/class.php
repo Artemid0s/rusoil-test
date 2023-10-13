@@ -2,11 +2,16 @@
 \Bitrix\Main\Localization\Loc::loadMessages(__FILE__);
 
 use Bitrix\Main\Engine\Contract\Controllerable;
+use Bitrix\Main\Error;
+use Bitrix\Main\Errorable;
+use Bitrix\Main\ErrorCollection;
 use Bitrix\Main\Context;
 use Bitrix\Main\Mail\Event;
 
-class EmailOrderForm extends \CBitrixComponent implements Controllerable
+class EmailOrderForm extends CBitrixComponent implements Controllerable, Errorable
 {
+  protected $errorCollection;
+
   // Обязательный метод
   public function configureActions()
   {
@@ -19,12 +24,23 @@ class EmailOrderForm extends \CBitrixComponent implements Controllerable
     ];
   }
 
+  public function getErrors(): array
+  {
+    return $this->errorCollection->toArray();
+  }
+
+  public function getErrorByCode($code): Error
+  {
+    return $this->errorCollection->getErrorByCode($code);
+  }
+
   public function onPrepareComponentParams($arParams)
   {
     $admin_email = COption::GetOptionString('main', 'email_from');
 
     $arParams["EMAIL"] = !empty($arParams["EMAIL"]) ? $arParams["EMAIL"] : $admin_email;
 
+    $this->errorCollection = new ErrorCollection();
     return $arParams;
   }
 
@@ -36,6 +52,18 @@ class EmailOrderForm extends \CBitrixComponent implements Controllerable
     $formData = $request->get("order");
     $arFile = [];
     $savedFileID = "";
+
+    if (!($request->get("title"))) {
+      return $this->errorCollection[] = new Error("Поле 'Заголовок заявки' не заполнено");
+    }
+
+    if (!($request->get("type"))) {
+      return $this->errorCollection[] = new Error("Поле 'Вид заявки' не заполнено");
+    }
+
+    if (!($request->get("category"))) {
+      return $this->errorCollection[] = new Error("Поле 'Категория' не заполнено");
+    }
 
     if (!empty($file)) {
       $arFile = [
@@ -59,7 +87,7 @@ class EmailOrderForm extends \CBitrixComponent implements Controllerable
       "AMOUNT" => $formData["composition"]["amount"],
       "PACKAGING" => $formData["composition"]["packaging"],
       "CLIENT" => $formData["composition"]["client"],
-      "FILE" => !empty($arFile) ? $arFile: "нет",
+      "FILE" => $arFile,
       "COMMENT" => $formData["composition"]["comment"]
     ];
 

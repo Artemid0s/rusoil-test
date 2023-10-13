@@ -42,6 +42,12 @@ function submitForm() {
 
                     $(".spinner-overlay").removeClass("show");
                     $(".spinner-border").removeClass("show");
+                },
+                function(response) {
+                    $(".error-message").text(response.data.message);
+
+                    $(".spinner-overlay").removeClass("show");
+                    $(".spinner-border").removeClass("show");
                 }
             );
     });

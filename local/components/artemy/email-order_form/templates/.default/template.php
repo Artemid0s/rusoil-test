@@ -115,6 +115,11 @@ $this->addExternalJs('https://code.jquery.com/jquery-3.7.1.min.js');
             </div>
         </div>
         <br/>
+        <div class="row">
+            <div class="col col-lg-12">
+                <span class="error-message"></span>
+            </div>
+        </div>
         <div class="row wo-padding">
             <div class="col col-lg-3">
                 <button class="btn btn-primary">
