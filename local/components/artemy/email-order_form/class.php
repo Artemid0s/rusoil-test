@@ -53,15 +53,15 @@ class EmailOrderForm extends CBitrixComponent implements Controllerable, Errorab
     $arFile = [];
     $savedFileID = "";
 
-    if (!($request->get("title"))) {
+    if ($request->get("title") === "") {
       return $this->errorCollection[] = new Error(GetMessage("TITLE_ERROR_MESSAGE"));
     }
 
-    if (!($request->get("type"))) {
+    if ($request->get("type") === "") {
       return $this->errorCollection[] = new Error(GetMessage("TYPE_ERROR_MESSAGE"));
     }
 
-    if (!($request->get("category"))) {
+    if ($request->get("category") === "") {
       return $this->errorCollection[] = new Error(GetMessage("CATEGORY_ERROR_MESSAGE"));
     }
 

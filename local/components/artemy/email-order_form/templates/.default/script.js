@@ -38,8 +38,8 @@ function submitForm() {
                 data: formData
             })
             .then(function (response) {
-                    console.log(response);
-
+                    $("form").addClass("hide");
+                    $(".success").addClass("show");
                     $(".spinner-overlay").removeClass("show");
                     $(".spinner-border").removeClass("show");
                 },

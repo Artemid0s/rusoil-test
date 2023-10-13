@@ -134,4 +134,9 @@ $this->addExternalJs('https://code.jquery.com/jquery-3.7.1.min.js');
             <span class="sr-only"></span>
         </div>
     </div>
+    <div class="row success">
+        <div class="col col-lg-12">
+            <span>Форма отправлена успешно</span>
+        </div>
+    </div>
 </div>
