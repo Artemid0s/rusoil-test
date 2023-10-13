@@ -54,15 +54,15 @@ class EmailOrderForm extends CBitrixComponent implements Controllerable, Errorab
     $savedFileID = "";
 
     if (!($request->get("title"))) {
-      return $this->errorCollection[] = new Error("Поле 'Заголовок заявки' не заполнено");
+      return $this->errorCollection[] = new Error(GetMessage("TITLE_ERROR_MESSAGE"));
     }
 
     if (!($request->get("type"))) {
-      return $this->errorCollection[] = new Error("Поле 'Вид заявки' не заполнено");
+      return $this->errorCollection[] = new Error(GetMessage("TYPE_ERROR_MESSAGE"));
     }
 
     if (!($request->get("category"))) {
-      return $this->errorCollection[] = new Error("Поле 'Категория' не заполнено");
+      return $this->errorCollection[] = new Error(GetMessage("CATEGORY_ERROR_MESSAGE"));
     }
 
     if (!empty($file)) {
